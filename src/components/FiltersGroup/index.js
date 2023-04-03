@@ -7,7 +7,7 @@ const FiltersGroup = props => {
     ratingsList,
     onChangeSerchInput,
     clearFilters,
-    submitInput,
+    enterSearchInput,
     changeCategory,
     searchInput,
     changeRating,
@@ -16,24 +16,24 @@ const FiltersGroup = props => {
   const onChangeSearch = event => {
     onChangeSerchInput(event.target.value)
   }
-  const onSubmitSearch = event => {
-    event.preventDefault()
-    submitInput()
+
+  const onEnterSearchInput = event => {
+    if (event.key === 'Enter') {
+      enterSearchInput()
+    }
   }
-  const onHitClearFilters = () => clearFilters()
 
   return (
     <div className="filters-group-container">
       <div className="search-container">
-        <form onSubmit={onSubmitSearch}>
-          <input
-            type="search"
-            className="input"
-            placeholder="Search"
-            onChange={onChangeSearch}
-            value={searchInput}
-          />
-        </form>
+        <input
+          type="search"
+          className="input"
+          placeholder="Search"
+          onChange={onChangeSearch}
+          onKeyDown={onEnterSearchInput}
+          value={searchInput}
+        />
         <BsSearch />
       </div>
       <h1 className="category-heading">Category</h1>
@@ -77,11 +77,7 @@ const FiltersGroup = props => {
           )
         })}
       </ul>
-      <button
-        onClick={onHitClearFilters}
-        type="button"
-        className="clear-button"
-      >
+      <button onClick={clearFilters} type="button" className="clear-button">
         Clear Filters
       </button>
     </div>

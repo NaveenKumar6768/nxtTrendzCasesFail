@@ -150,8 +150,22 @@ class AllProductsSection extends Component {
   changeCategory = id =>
     this.setState({category: id, titleSearch: ''}, this.getProducts)
 
-  clearFilters = () =>
-    this.setState({category: '', rating: '', titleSearch: ''}, this.getProducts)
+  clearFilters = () => {
+    this.setState(
+      {category: '', rating: '', titleSearch: '', searchInput: ''},
+      this.getProducts,
+    )
+  }
+
+  enterSearchInput = () => {
+    const {searchInput} = this.state
+    if (searchInput !== '') {
+      this.setState(
+        {searchInput: '', titleSearch: searchInput},
+        this.getProducts,
+      )
+    }
+  }
 
   submitInput = () => {
     const {searchInput} = this.state
@@ -244,7 +258,7 @@ class AllProductsSection extends Component {
           categoryOptions={categoryOptions}
           ratingsList={ratingsList}
           onChangeSerchInput={this.onChangeSerchInput}
-          submitInput={this.submitInput}
+          enterSearchInput={this.enterSearchInput}
           searchInput={searchInput}
           changeCategory={this.changeCategory}
           changeRating={this.changeRating}
